@@ -2,39 +2,57 @@ name: Controllo Voli Giornaliero
 
 on:
   schedule:
-    # Nota: GitHub Actions usa l'orario UTC. 
-    # 07:30 e 17:00 UTC corrispondono a 08:30 e 18:00 in Italia (durante l'ora solare CET).
+    # GitHub Actions usa l'orario UTC.
+    # 07:30 e 17:00 UTC = 08:30 e 18:00 in Italia con ora solare (CET), 09:30 e 19:00 con ora legale.
     - cron: '30 7,17 * * *'
-  
-  # Permette di avviare lo script manualmente dalla tab "Actions" di GitHub in qualsiasi momento
+
+  # Avvio manuale dalla tab "Actions"
   workflow_dispatch:
+
+# Serve per salvare stato_notifiche.json (le offerte già inviate) nel repository
+permissions:
+  contents: write
+
+# Evita due esecuzioni sovrapposte che si pesterebbero lo stato
+concurrency:
+  group: check-flights
+  cancel-in-progress: false
 
 jobs:
   check-flights:
     runs-on: ubuntu-latest
-    
+
     steps:
-      # 1. Scarica il codice del tuo repository
       - name: Checkout del codice
         uses: actions/checkout@v4
 
-      # 2. Configura l'ambiente Python
       - name: Imposta Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.10'
-          cache: 'pip'
+          python-version: '3.11'
 
-      # 3. Installa le dipendenze necessarie
       - name: Installa dipendenze
-        run: |
-          python -m pip install --upgrade pip
-          pip install requests pandas
+        run: python -m pip install requests
 
-      # 4. Esegue lo script di controllo dei voli passando le chiavi in sicurezza
       - name: Esegui Bot Voli
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           SERPAPI_KEY: ${{ secrets.SERPAPI_KEY }}
+          # Modifica questi valori per cambiare il comportamento del bot
+          BUDGET_MAX: '160'
+          DURATA_MAX_ORE: '2.5'
+          MESI_AVANTI: '7'
+          MAX_CHIAMATE: '10'
         run: python bot_scheduler.py
+
+      - name: Salva lo stato delle notifiche
+        if: always()
+        run: |
+          if [ -n "$(git status --porcelain stato_notifiche.json)" ]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add stato_notifiche.json
+            git commit -m "Aggiorna stato notifiche voli [skip ci]"
+            git pull --rebase origin "${GITHUB_REF_NAME}" && git push
+          fi
