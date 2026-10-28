@@ -4,109 +4,161 @@ from datetime import date, timedelta
 import requests
 import database
 
+# Inizializza il DB locale
 database.init_db()
 
 st.set_page_config(page_title="Flight Finder Roma", page_icon="✈️", layout="wide")
 
-# Lista città già visitate da Davide
+# Le tue 13 città già visitate (Codici IATA)
 CITTA_VISITATE = ["LIS", "MAD", "VLC", "VIE", "AGP", "WAW", "OTP", "ATH", "RHO", "GPA", "BRU", "CRL", "SOF"]
-# Mappa IATA indicativa per l'interruttore
-NOMI_CITTA = "Lisbona, Madrid, Valencia, Vienna, Malaga, Varsavia, Bucarest, Atene, Rodi, Patrasso, Bruxelles, Sofia"
+NOMI_CITTA_STR = "Lisbona, Madrid, Valencia, Vienna, Malaga, Varsavia, Bucarest, Atene, Rodi, Patrasso, Bruxelles, Charleroi (Bruges), Sofia"
 
 st.title("✈️ Personal Flight Finder da Roma (FCO / CIA)")
-st.caption(f"Filtra e trova offerte per weekend e ponti estesi | Partenze da Fiumicino e Ciampino")
+st.caption("Cerca weekend lunghi, ponti e offerte low-cost in partenza da Roma con filtri personalizzati.")
 
-# --- SIDEBAR FILTRI ---
-st.sidebar.header("⚙️ Parametri di Ricerca")
-budget_max = st.sidebar.slider("Budget Massimo (€)", 20, 200, 65, step=5)
-durata_max_ore = st.sidebar.slider("Durata Max Volo (ore)", 1.0, 4.0, 1.5, step=0.5)
+# --- SIDEBAR: PARAMETRI E FILTRI ---
+st.sidebar.header("⚙️ Filtri di Ricerca")
 
-st.sidebar.subheader("🚫 Esclusioni & Aeroporti")
+# 1. Budget Max (Default 120€, Max 400€)
+budget_max = st.sidebar.slider("Budget Massimo A/R (€)", min_value=20, max_value=400, value=120, step=5)
+
+# 2. Durata Max Volo (Default 2.5 ore)
+durata_max_ore = st.sidebar.slider("Durata Max Volo (ore)", min_value=1.0, max_value=6.0, value=2.5, step=0.5)
+
+st.sidebar.subheader("🚫 Esclusioni & Parcheggio")
 escludi_visitate = st.sidebar.checkbox("Escludi città già visitate", value=True, 
-                                       help=f"Esclude: {NOMI_CITTA}")
+                                       help=f"Esclude: {NOMI_CITTA_STR}")
 
-solo_stesso_aeroporto = st.sidebar.checkbox("Forza stesso aeroporto A/R (Auto al parcheggio)", value=False)
+solo_stesso_aeroporto = st.sidebar.checkbox("Forza stesso aeroporto A/R (Auto al parcheggio)", value=False,
+                                            help="Evita combinazioni in cui parti da Fiumicino e torni a Ciampino (o viceversa).")
+
+invia_telegram_da_web = st.sidebar.checkbox("Invia report su Telegram al click", value=True,
+                                           help="Invia anche la notifica su Telegram quando fai clic sul pulsante di ricerca.")
 
 st.sidebar.subheader("📅 Tipologia di Viaggio")
-opzione_date = st.sidebar.radio("Seleziona Combinazione:", [
+tipo_viaggio = st.sidebar.selectbox("Formato Date:", [
     "Tutte le opzioni",
-    "Weekend Standard (Ven-Dom / Sab-Dom)",
+    "Weekend Standard (Ven-Dom / Sab-Dom / Sab-Lun)",
     "Ponti & Ponti Allungati (Festivi + Ferie)"
 ])
 
-# --- FUNZIONE LOGICA PONTI E WEEKEND (2026/2027) ---
-def calcola_fine_settimana_e_ponti():
-    date_coppie = []
-    oggi = date.today()
-    
-    # Esempio festivi italiani fissi
-    festivi = [
-        date(2026, 11, 1), date(2026, 12, 8), date(2026, 12, 25), date(2026, 12, 26),
-        date(2027, 1, 1), date(2027, 1, 6), date(2027, 4, 25), date(2027, 5, 1), date(2027, 6, 2)
-    ]
-    
-    # Scansiona i prossimi 90 giorni
-    for i in range(90):
-        giorno = oggi + timedelta(days=i)
-        dow = giorno.weekday() # 0 = Lun, 1 = Mar, ... 3 = Gio, 4 = Ven, 5 = Sab, 6 = Dom
-        
-        # 1. Weekend Standard
-        if dow == 4: # Venerdì
-            date_coppie.append((giorno, giorno + timedelta(days=2), "Ven-Dom"))
-            date_coppie.append((giorno, giorno + timedelta(days=3), "Ven-Lun"))
-        if dow == 5: # Sabato
-            date_coppie.append((giorno, giorno + timedelta(days=1), "Sab-Dom"))
-            date_coppie.append((giorno, giorno + timedelta(days=2), "Sab-Lun"))
-            
-        # 2. Ponti Allungati (Festivo di Martedì -> Ferie di Lunedì | Sab-Dom-Lun-Mar)
-        if (giorno + timedelta(days=3)) in festivi and dow == 5:
-            date_coppie.append((giorno, giorno + timedelta(days=3), "Ponte Allungato (Sab-Mar | Ferie Lun)"))
-            
-        # 3. Ponti Allungati (Festivo di Giovedì -> Ferie di Venerdì | Gio-Ven-Sab-Dom)
-        if giorno in festivi and dow == 3:
-            date_coppie.append((giorno, giorno + timedelta(days=3), "Ponte Allungato (Gio-Dom | Ferie Ven)"))
-            
-    return date_coppie
+# --- FUNZIONE PER COSTRUIRE LINK GOOGLE FLIGHTS ---
+def genera_link_google_flights(dep_iata, dest_iata, dep_date, ret_date):
+    # Genera un link diretto e funzionante di ricerca su Google Flights
+    return f"https://www.google.com/travel/flights?q=Flights%20to%20{dest_iata}%20from%20{dep_iata}%20on%20{dep_date}%20through%20{ret_date}"
 
-# API Wrapper (Mockup strutturato per SerpApi / Google Flights)
-def cerca_offerte_volo(budget, escludi_citta, solo_stesso_apt):
-    # Qui inserisci la tua chiamata a SerpApi o API alternativa
-    # Ritorna una struttura simulata di esempio aderente ai filtri
-    risultati_mock = [
-        {"dest": "OPO", "citta": "Porto", "dep": "2026-11-13", "ret": "2026-11-15", "prezzo": 42.0, "dep_apt": "FCO", "ret_apt": "FCO", "durata": "1h 25m", "tipo": "Ven-Dom"},
-        {"dest": "MAD", "citta": "Madrid", "dep": "2026-11-20", "ret": "2026-11-22", "prezzo": 38.0, "dep_apt": "CIA", "ret_apt": "FCO", "durata": "2h 10m", "tipo": "Ven-Dom"},
-        {"dest": "TRS", "citta": "Trieste", "dep": "2026-12-05", "ret": "2026-12-08", "prezzo": 55.0, "dep_apt": "FCO", "ret_apt": "FCO", "durata": "1h 05m", "tipo": "Ponte Allungato (Sab-Mar)"}
-    ]
-    
-    filtrati = []
-    for f in risultati_mock:
-        if f["prezzo"] > budget:
-            continue
-        if escludi_citta and f["dest"] in CITTA_VISITATE:
-            continue
-        if solo_stesso_apt and f["dep_apt"] != f["ret_apt"]:
-            continue
-        
-        # Etichetta Aeroporto per l'auto
-        if f["dep_apt"] == f["ret_apt"]:
-            f["avviso_auto"] = f"🟢 Stesso Aeroporto ({f['dep_apt']})"
-        else:
-            f["avviso_auto"] = f"🟡 CROSS-AIRPORT ({f['dep_apt']} ➡️ {f['ret_apt']})"
-            
-        filtrati.append(f)
-        
-    return pd.DataFrame(filtrati)
+# --- FUNZIONE NOTIFICA TELEGRAM ---
+def invia_telegram(testo):
+    try:
+        bot_token = st.secrets["TELEGRAM_BOT_TOKEN"]
+        chat_id = st.secrets["TELEGRAM_CHAT_ID"]
+        url = f"https://api.telegram.org/bot{bot_token}/sendMessage"
+        payload = {"chat_id": chat_id, "text": testo, "parse_mode": "Markdown"}
+        requests.post(url, json=payload)
+    except Exception as e:
+        st.warning(f"Impossibile inviare a Telegram (Secrets non configurati o errati): {e}")
 
-# --- BOTTONE RICERCA STREAMLIT ---
-if st.button("🔍 Cerca Voli Low-Cost"):
-    with st.spinner("Scansione in corso su Fiumicino e Ciampino..."):
-        df = cerca_offerte_volo(budget_max, escludi_visitate, solo_stesso_aeroporto)
+# --- DATI DIMOSTRATIVI CON LINK REALI ---
+def get_dati_dimostrativi():
+    return [
+        {
+            "citta": "Porto", "dest": "OPO", "dep": "2026-11-13", "ret": "2026-11-15", 
+            "prezzo": 42.0, "dep_apt": "FCO", "ret_apt": "FCO", "durata": "1h 25m", 
+            "tipo": "Weekend Standard (Ven-Dom)",
+            "link": genera_link_google_flights("FCO", "OPO", "2026-11-13", "2026-11-15")
+        },
+        {
+            "citta": "Barcellona", "dest": "BCN", "dep": "2026-11-20", "ret": "2026-11-23", 
+            "prezzo": 85.0, "dep_apt": "CIA", "ret_apt": "FCO", "durata": "1h 55m", 
+            "tipo": "Weekend Standard (Ven-Lun)",
+            "link": genera_link_google_flights("CIA", "BCN", "2026-11-20", "2026-11-23")
+        },
+        {
+            "citta": "Trieste", "dest": "TRS", "dep": "2026-12-05", "ret": "2026-12-08", 
+            "prezzo": 115.0, "dep_apt": "FCO", "ret_apt": "FCO", "durata": "1h 05m", 
+            "tipo": "Ponte 8 Dic (Sab-Mar | Ferie Lun)",
+            "link": genera_link_google_flights("FCO", "TRS", "2026-12-05", "2026-12-08")
+        },
+        {
+            "citta": "Parigi", "dest": "ORY", "dep": "2026-11-27", "ret": "2026-11-29", 
+            "prezzo": 140.0, "dep_apt": "FCO", "ret_apt": "FCO", "durata": "2h 05m", 
+            "tipo": "Weekend Standard (Ven-Dom)",
+            "link": genera_link_google_flights("FCO", "ORY", "2026-11-27", "2026-11-29")
+        }
+    ]
+
+# --- ELABORAZIONE DATI AL CLICK ---
+if st.button("🔍 Cerca Offerte Aggiornate"):
+    with st.spinner("Analisi voli in corso da Fiumicino e Ciampino..."):
+        
+        lista_offerte = get_dati_dimostrativi()
+
+        filtrati = []
+        for f in lista_offerte:
+            # 1. Filtro Budget (fino a 400€, default 120€)
+            if f["prezzo"] > budget_max:
+                continue
+            
+            # 2. Filtro Città Visitate
+            if escludi_visitate and f["dest"] in CITTA_VISITATE:
+                continue
+                
+            # 3. Filtro Stesso Aeroporto (Parcheggio Auto)
+            if solo_stesso_aeroporto and f["dep_apt"] != f["ret_apt"]:
+                continue
+                
+            # Assegnazione etichetta visiva aeroporti
+            if f["dep_apt"] == f["ret_apt"]:
+                f["avviso_auto"] = f"🟢 Stesso Aeroporto ({f['dep_apt']})"
+            else:
+                f["avviso_auto"] = f"🟡 Cross-Airport ({f['dep_apt']} ➡️ {f['ret_apt']})"
+                
+            filtrati.append(f)
+            
+        df = pd.DataFrame(filtrati)
         
         if df.empty:
-            st.warning("Nessun volo trovato con i filtri selezionati.")
+            st.warning("Nessun volo trovato con i filtri attuali. Prova ad alzare il budget.")
         else:
-            st.subheader(f"Trovate {len(df)} offerte trasparenti:")
+            st.success(f"Trovate {len(df)} offerte perfette per te!")
+            
+            # Rinominazione delle colonne completamente in italiano
+            df_display = df[[
+                "citta", "dest", "prezzo", "dep", "ret", "tipo", "durata", "avviso_auto", "link"
+            ]].rename(columns={
+                "citta": "Città Destinazione",
+                "dest": "Codice IATA",
+                "prezzo": "Prezzo Totale A/R (€)",
+                "dep": "Data Partenza",
+                "ret": "Data Ritorno",
+                "tipo": "Tipologia Viaggio",
+                "durata": "Durata Volo",
+                "avviso_auto": "Aeroporti A/R",
+                "link": "Link Prenotazione"
+            })
+            
+            # Mostra la tabella formattata con Link Cliccabile
             st.dataframe(
-                df[["citta", "dest", "prezzo", "dep", "ret", "tipo", "durata", "avviso_auto"]],
+                df_display,
+                column_config={
+                    "Link Prenotazione": st.column_config.LinkColumn(
+                        "Link Prenotazione", 
+                        display_text="✈️ Apri su Google Flights"
+                    ),
+                    "Prezzo Totale A/R (€)": st.column_config.NumberColumn(
+                        "Prezzo Totale A/R (€)",
+                        format="%.2f €"
+                    )
+                },
                 use_container_width=True
             )
+            
+            # Invio facoltativo del report su Telegram al click
+            if invia_telegram_da_web and not df.empty:
+                msg = f"✈️ *RICERCA VOLI DA STREAMLIT*\nTrovate {len(df)} offerte entro {budget_max}€:\n\n"
+                for _, row in df.iterrows():
+                    msg += f"• *{row['citta']}* ({row['dest']}) - {row['prezzo']}€\n"
+                    msg += f"  📅 {row['dep']} ➡️ {row['ret']} ({row['tipo']})\n"
+                    msg += f"  🔗 [Prenota qui]({row['link']})\n\n"
+                invia_telegram(msg)
+                st.info("📩 Report inviato anche su Telegram!")
