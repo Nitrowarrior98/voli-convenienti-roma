@@ -62,9 +62,20 @@ def festivi_italiani(anno):
     }
 
 
-def calcola_date_estese(mesi=7, oggi=None):
-    """Coppie (andata, ritorno) per weekend e ponti nei prossimi `mesi` mesi."""
+def fine_orizzonte(oggi, mesi):
+    """Ultimo giorno del mese corrente + `mesi` mesi (mesi=4 da ottobre -> 28 febbraio)."""
+    indice = oggi.year * 12 + (oggi.month - 1) + mesi
+    anno, mese = divmod(indice, 12)
+    mese += 1
+    primo_successivo = date(anno + (mese == 12), mese % 12 + 1, 1)
+    return primo_successivo - timedelta(days=1)
+
+
+def calcola_date_estese(mesi=4, oggi=None):
+    """Coppie (andata, ritorno) per weekend e ponti dal giorno corrente
+    fino a fine del mese corrente + `mesi` mesi."""
     oggi = oggi or date.today()
+    fine = fine_orizzonte(oggi, mesi)
     festivi = festivi_italiani(oggi.year) | festivi_italiani(oggi.year + 1)
     coppie = {}
 
@@ -74,7 +85,7 @@ def calcola_date_estese(mesi=7, oggi=None):
         if chiave not in coppie or tipo.startswith("Ponte"):
             coppie[chiave] = tipo
 
-    for i in range(mesi * 30):
+    for i in range((fine - oggi).days + 1):
         g = oggi + timedelta(days=i)
         dow = g.weekday()  # 0 = lun ... 6 = dom
 
@@ -100,27 +111,34 @@ def calcola_date_estese(mesi=7, oggi=None):
 
     risultato = []
     for (dep, ret), tipo in sorted(coppie.items()):
-        if dep >= oggi:
+        if oggi <= dep and ret <= fine:
             risultato.append({"dep": dep.isoformat(), "ret": ret.isoformat(), "tipo": tipo})
     return risultato
 
 
 def seleziona_date(coppie, quante, adesso=None):
-    """Sceglie `quante` coppie di date. Ponti sempre per primi; il resto ruota
-    a ogni esecuzione, così nel tempo si copre tutto l'orizzonte senza finire le chiamate API."""
+    """Sceglie `quante` coppie di date per questa esecuzione.
+
+    Metà dei posti (arrotondata per eccesso) va ai ponti, il resto ai weekend; entrambe le liste
+    ruotano a ogni esecuzione, così nel tempo si copre tutto l'orizzonte con poche chiamate API.
+    """
     if quante <= 0 or not coppie:
         return []
     ponti = [c for c in coppie if c["tipo"].startswith("Ponte")]
     altre = [c for c in coppie if not c["tipo"].startswith("Ponte")]
-    scelte = ponti[:quante]
-    resto = quante - len(scelte)
-    if resto > 0 and altre:
-        adesso = adesso or datetime.now()
-        turno = adesso.toordinal() * 2 + (1 if adesso.hour >= 12 else 0)
-        start = (turno * resto) % len(altre)
-        for k in range(min(resto, len(altre))):
-            scelte.append(altre[(start + k) % len(altre)])
-    return scelte
+    n_ponti = min(len(ponti), (quante + 1) // 2)
+    n_altre = min(len(altre), quante - n_ponti)
+    n_ponti = min(len(ponti), quante - n_altre)  # se mancano weekend, più ponti
+    adesso = adesso or datetime.now()
+    turno = adesso.toordinal() * 2 + (1 if adesso.hour >= 12 else 0)
+
+    def ruota(lista, n):
+        if n <= 0 or not lista:
+            return []
+        start = (turno * n) % len(lista)
+        return [lista[(start + k) % len(lista)] for k in range(n)]
+
+    return sorted(ruota(ponti, n_ponti) + ruota(altre, n_altre), key=lambda c: c["dep"])
 
 
 # ----------------------------------------------------------------------------
@@ -197,7 +215,7 @@ def cerca_serpapi(api_key, dep_apt, dep, ret, tipo, timeout=40):
     return offerte
 
 
-def cerca_offerte(api_key, mesi=7, max_chiamate=10, aeroporti=None, pausa=1.0, log=print):
+def cerca_offerte(api_key, mesi=4, max_chiamate=4, aeroporti=None, pausa=1.0, log=print):
     """Scansiona le date selezionate su FCO/CIA. Ritorna (offerte, chiamate_fatte, errori)."""
     aeroporti = aeroporti or AEROPORTI_PARTENZA
     pairs_per_airport = max(1, max_chiamate // len(aeroporti))

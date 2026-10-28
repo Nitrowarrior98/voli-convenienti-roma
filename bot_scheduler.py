@@ -2,8 +2,8 @@
 
 Eseguito da GitHub Actions (.github/workflows/check_flights.yml). Variabili d'ambiente:
   SERPAPI_KEY, TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID  (obbligatorie, salvo --dry-run/--demo)
-  BUDGET_MAX (default 160), DURATA_MAX_ORE (default 2.5), MESI_AVANTI (default 7),
-  MAX_CHIAMATE (default 10: chiamate SerpAPI per esecuzione)
+  BUDGET_MAX (default 160), DURATA_MAX_ORE (default 2.5), MESI_AVANTI (default 4: mese corrente + 4 mesi),
+  MAX_CHIAMATE (default 4: chiamate SerpAPI per esecuzione)
 
 Esempi:
   python bot_scheduler.py --demo --dry-run    # prova senza chiavi, stampa e basta
@@ -26,8 +26,8 @@ def main():
 
     budget = float(os.environ.get("BUDGET_MAX", 160))
     durata_max = float(os.environ.get("DURATA_MAX_ORE", 2.5))
-    mesi = int(os.environ.get("MESI_AVANTI", 7))
-    max_chiamate = int(os.environ.get("MAX_CHIAMATE", 10))
+    mesi = int(os.environ.get("MESI_AVANTI", 4))
+    max_chiamate = int(os.environ.get("MAX_CHIAMATE", 4))
 
     if args.demo:
         offerte, errori = fl.dati_dimostrativi(), []
@@ -37,7 +37,7 @@ def main():
         if not chiave:
             print("ERRORE: manca SERPAPI_KEY.", file=sys.stderr)
             return 1
-        print(f"Ricerca reale: max {max_chiamate} chiamate, orizzonte {mesi} mesi.")
+        print(f"Ricerca reale: max {max_chiamate} chiamate, orizzonte: mese corrente + {mesi} mesi.")
         offerte, chiamate, errori = fl.cerca_offerte(chiave, mesi=mesi, max_chiamate=max_chiamate)
         print(f"Chiamate SerpAPI usate: {chiamate}. Destinazioni grezze: {len(offerte)}.")
         if chiamate and len(errori) == chiamate:

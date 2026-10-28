@@ -13,8 +13,9 @@ GitHub → Settings → Secrets and variables → Actions: `SERPAPI_KEY`, `TELEG
 Per l'app Streamlit gli stessi nomi vanno nei Secrets di Streamlit.
 
 ## Consumo SerpAPI
-Ogni esecuzione usa al massimo `MAX_CHIAMATE` chiamate (default 10) → fino a 20 chiamate al giorno.
-Il piano gratuito SerpAPI ha poche ricerche al mese: abbassa `MAX_CHIAMATE` nel workflow o riduci la frequenza del cron se serve.
+Il bot gira una volta al giorno e usa al massimo `MAX_CHIAMATE` chiamate (default 4) → circa 120 ricerche al mese,
+dentro le 250 del piano gratuito SerpAPI (resta margine per i clic sull'app Streamlit, che consumano chiamate anch'essi).
+L'orizzonte è il mese corrente + `MESI_AVANTI` mesi (default 4). Le date ruotano a ogni esecuzione.
 
 ## Prova locale
 ```

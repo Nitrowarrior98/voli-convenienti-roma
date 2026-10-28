@@ -3,8 +3,8 @@ name: Controllo Voli Giornaliero
 on:
   schedule:
     # GitHub Actions usa l'orario UTC.
-    # 07:30 e 17:00 UTC = 08:30 e 18:00 in Italia con ora solare (CET), 09:30 e 19:00 con ora legale.
-    - cron: '30 7,17 * * *'
+    # Una volta al giorno: 07:30 UTC = 08:30 in Italia con ora solare (CET), 09:30 con ora legale.
+    - cron: '30 7 * * *'
 
   # Avvio manuale dalla tab "Actions"
   workflow_dispatch:
@@ -42,8 +42,8 @@ jobs:
           # Modifica questi valori per cambiare il comportamento del bot
           BUDGET_MAX: '160'
           DURATA_MAX_ORE: '2.5'
-          MESI_AVANTI: '7'
-          MAX_CHIAMATE: '10'
+          MESI_AVANTI: '4'
+          MAX_CHIAMATE: '4'
         run: python bot_scheduler.py
 
       - name: Salva lo stato delle notifiche

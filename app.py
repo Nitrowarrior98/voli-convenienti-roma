@@ -21,8 +21,8 @@ escludi_visitate = st.sidebar.checkbox("Escludi città già visitate", value=Tru
 solo_stesso_aeroporto = st.sidebar.checkbox("Forza stesso aeroporto A/R (auto al parcheggio)", value=False)
 
 st.sidebar.subheader("📅 Orizzonte e consumo API")
-mesi_avanti = st.sidebar.slider("Mesi di scansione in avanti", min_value=1, max_value=12, value=7)
-max_chiamate = st.sidebar.slider("Chiamate SerpAPI per ricerca", min_value=2, max_value=30, value=8, step=2,
+mesi_avanti = st.sidebar.slider("Mesi oltre il mese corrente", min_value=1, max_value=12, value=4)
+max_chiamate = st.sidebar.slider("Chiamate SerpAPI per ricerca", min_value=2, max_value=30, value=4, step=2,
                                  help="Ogni chiamata consuma crediti SerpAPI. Ogni clic ne usa fino a questo numero.")
 invia_telegram_da_web = st.sidebar.checkbox("Invia report su Telegram al click", value=False)
 
