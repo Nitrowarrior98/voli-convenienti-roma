@@ -53,10 +53,11 @@ def _pasqua(anno):
 
 
 def festivi_italiani(anno):
+    """Festivi nazionali + patrono di Roma (29 giugno, Santi Pietro e Paolo)."""
     pasqua = _pasqua(anno)
     return {
         date(anno, 1, 1), date(anno, 1, 6), date(anno, 4, 25), date(anno, 5, 1),
-        date(anno, 6, 2), date(anno, 8, 15), date(anno, 11, 1), date(anno, 12, 8),
+        date(anno, 6, 2), date(anno, 6, 29), date(anno, 8, 15), date(anno, 11, 1), date(anno, 12, 8),
         date(anno, 12, 25), date(anno, 12, 26),
         pasqua, pasqua + timedelta(days=1),
     }
