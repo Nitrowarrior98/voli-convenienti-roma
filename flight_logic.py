@@ -7,12 +7,47 @@ import json
 import os
 import re
 import time
-from datetime import date, datetime, timedelta
+import traceback
+from datetime import date, datetime, timedelta, timezone
 from urllib.parse import quote
 
 import requests
 
 SERPAPI_URL = "https://serpapi.com/search.json"
+SERPAPI_ACCOUNT_URL = "https://serpapi.com/account.json"
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+FILE_STATO = os.path.join(BASE_DIR, "stato_notifiche.json")      # offerte già notificate
+FILE_ARCHIVIO = os.path.join(BASE_DIR, "ultimi_risultati.json")  # ultime offerte viste dal bot
+FILE_QUOTA = os.path.join(BASE_DIR, "quota_serpapi.json")        # contatore ricerche SerpAPI
+
+# Tipologie di viaggio selezionabili (chiave -> etichetta)
+TIPI_VIAGGIO = {
+    "tutte": "Tutte le opzioni",
+    "weekend": "Weekend standard (Ven-Dom, Sab-Dom, Sab-Lun, Ven-Lun)",
+    "ponti": "Ponti & ponti allungati (festivi + ferie)",
+}
+
+
+def tipo_corrisponde(tipo, filtro):
+    """True se l'etichetta `tipo` (es. 'Ponte (Gio-Dom | ferie Ven)') rientra nel filtro."""
+    if filtro == "weekend":
+        return str(tipo).startswith("Weekend")
+    if filtro == "ponti":
+        return str(tipo).startswith("Ponte")
+    return True
+
+
+def pulisci_segreti(testo, *segreti):
+    """Toglie chiavi/token da un testo (es. l'URL di una richiesta fallita) prima di mostrarlo o inviarlo."""
+    testo = re.sub(r"(api_key=)[^&\s'\"]+", r"\1***", str(testo))
+    testo = re.sub(r"(/bot)\d+:[A-Za-z0-9_-]+", r"\1***", testo)
+    for segreto in segreti:
+        if segreto:
+            testo = testo.replace(str(segreto), "***")
+    return testo
+
+
 AEROPORTI_PARTENZA = ["FCO", "CIA"]
 
 # Città già visitate (codici IATA) e nomi (minuscoli, IT + EN) per il confronto sul nome
@@ -216,11 +251,13 @@ def cerca_serpapi(api_key, dep_apt, dep, ret, tipo, timeout=40):
     return offerte
 
 
-def cerca_offerte(api_key, mesi=4, max_chiamate=4, aeroporti=None, pausa=1.0, log=print):
+def cerca_offerte(api_key, mesi=4, max_chiamate=4, aeroporti=None, pausa=1.0, log=print, tipo_viaggio="tutte"):
     """Scansiona le date selezionate su FCO/CIA. Ritorna (offerte, chiamate_fatte, errori)."""
     aeroporti = aeroporti or AEROPORTI_PARTENZA
     pairs_per_airport = max(1, max_chiamate // len(aeroporti))
-    date_scelte = seleziona_date(calcola_date_estese(mesi), pairs_per_airport)
+    # Il filtro tipologia agisce prima della ricerca: non si sprecano chiamate su date che non interessano
+    coppie = [c for c in calcola_date_estese(mesi) if tipo_corrisponde(c["tipo"], tipo_viaggio)]
+    date_scelte = seleziona_date(coppie, pairs_per_airport)
     offerte, chiamate, errori = [], 0, []
     for c in date_scelte:
         for apt in aeroporti:
@@ -231,8 +268,9 @@ def cerca_offerte(api_key, mesi=4, max_chiamate=4, aeroporti=None, pausa=1.0, lo
                 log(f"  {apt} {c['dep']}→{c['ret']} ({c['tipo']}): {len(trovate)} destinazioni")
                 offerte.extend(trovate)
             except Exception as e:  # una chiamata fallita non deve fermare le altre
-                errori.append(f"{apt} {c['dep']}→{c['ret']}: {e}")
-                log(f"  ERRORE {apt} {c['dep']}→{c['ret']}: {e}")
+                msg = pulisci_segreti(e, api_key)
+                errori.append(f"{apt} {c['dep']}→{c['ret']}: {msg}")
+                log(f"  ERRORE {apt} {c['dep']}→{c['ret']}: {msg}")
             chiamate += 1
             time.sleep(pausa)
     return offerte, chiamate, errori
@@ -242,10 +280,12 @@ def cerca_offerte(api_key, mesi=4, max_chiamate=4, aeroporti=None, pausa=1.0, lo
 # Filtri
 # ----------------------------------------------------------------------------
 def filtra_offerte(offerte, budget_max, durata_max_ore=None, escludi_italia=True,
-                   escludi_visitate=True, solo_stesso_aeroporto=False):
+                   escludi_visitate=True, solo_stesso_aeroporto=False, tipo_viaggio="tutte"):
     risultato = []
     for f in offerte:
         if f["prezzo"] > budget_max:
+            continue
+        if not tipo_corrisponde(f.get("tipo", ""), tipo_viaggio):
             continue
         codice = str(f.get("dest", "")).upper()
         nome = str(f.get("citta", "")).lower()
@@ -282,13 +322,15 @@ def filtra_offerte(offerte, budget_max, durata_max_ore=None, escludi_italia=True
 # ----------------------------------------------------------------------------
 # Telegram
 # ----------------------------------------------------------------------------
-def formatta_messaggio(titolo, offerte, budget_max):
+def formatta_messaggio(titolo, offerte, budget_max, piede=None):
     righe = [f"<b>{html.escape(titolo)}</b>", f"{len(offerte)} offerte estere (budget max {budget_max}€):", ""]
     for f in offerte:
         righe.append(f"• <b>{html.escape(f['citta'])}</b> ({html.escape(str(f['dest']))}) – {f['prezzo']:.0f}€")
         righe.append(f"  📅 {f['dep']} ➡️ {f['ret']} ({html.escape(f['tipo'])}) · {f['dep_apt']}")
         righe.append(f"  🔗 <a href=\"{html.escape(f['link'], quote=True)}\">Apri su Google Flights</a>")
         righe.append("")
+    if piede:
+        righe.append(html.escape(piede))
     return "\n".join(righe)
 
 
@@ -306,13 +348,24 @@ def invia_telegram(bot_token, chat_id, testo):
     url = f"https://api.telegram.org/bot{bot_token}/sendMessage"
     ok = True
     for b in blocchi:
-        r = requests.post(url, json={
-            "chat_id": chat_id, "text": b, "parse_mode": "HTML",
-            "disable_web_page_preview": True,
-        }, timeout=30)
-        if not r.ok:
+        try:
+            r = requests.post(url, json={
+                "chat_id": chat_id, "text": b, "parse_mode": "HTML",
+                "disable_web_page_preview": True,
+            }, timeout=30)
+            if not r.ok:
+                ok = False
+        except requests.RequestException:  # l'eccezione conterrebbe l'URL col token: non la propaghiamo
             ok = False
     return ok
+
+
+def avvisa_telegram(bot_token, chat_id, testo):
+    """Messaggio di servizio (errori, quota). Mai lanciare eccezioni da qui."""
+    try:
+        return invia_telegram(bot_token, chat_id, "⚠️ <b>Bot voli da Roma</b>\n\n" + html.escape(pulisci_segreti(testo, bot_token)))
+    except Exception:
+        return False
 
 
 # ----------------------------------------------------------------------------
@@ -351,6 +404,115 @@ def registra_notificate(offerte, stato):
     ora = datetime.now().isoformat(timespec="seconds")
     for f in offerte:
         stato[_id_offerta(f)] = {"prezzo": f["prezzo"], "dep": f["dep"], "notificata": ora}
+
+
+# ----------------------------------------------------------------------------
+# Archivio delle ultime offerte viste dal bot (l'app lo legge senza consumare crediti)
+# ----------------------------------------------------------------------------
+ARCHIVIO_GIORNI = 14  # dopo tanti giorni senza essere rivista, un'offerta esce dall'archivio
+_CAMPI_ARCHIVIO = ["citta", "dest", "paese", "dep", "ret", "prezzo", "dep_apt", "ret_apt",
+                   "durata_min", "scali", "tipo"]
+
+
+def carica_archivio(percorso=None):
+    try:
+        with open(percorso or FILE_ARCHIVIO, encoding="utf-8") as fh:
+            dati = json.load(fh)
+        return {"aggiornato": dati.get("aggiornato"), "offerte": dati.get("offerte", [])}
+    except (FileNotFoundError, json.JSONDecodeError):
+        return {"aggiornato": None, "offerte": []}
+
+
+def aggiorna_archivio(offerte, percorso=None, prezzo_max=250, oggi=None):
+    """Unisce le offerte appena trovate a quelle già in archivio (la più recente vince),
+    toglie quelle scadute o troppo vecchie. Ritorna quante ne restano."""
+    oggi = oggi or date.today()
+    adesso = datetime.now(timezone.utc).isoformat(timespec="seconds")
+    mappa = {_id_offerta(f): f for f in carica_archivio(percorso)["offerte"]}
+    for f in offerte:
+        if f["prezzo"] > prezzo_max:
+            continue
+        voce = {k: f.get(k) for k in _CAMPI_ARCHIVIO}
+        voce["visto"] = adesso
+        mappa[_id_offerta(f)] = voce
+    limite_vista = (datetime.now(timezone.utc) - timedelta(days=ARCHIVIO_GIORNI)).isoformat(timespec="seconds")
+    tenute = [v for v in mappa.values()
+              if v.get("dep", "") >= oggi.isoformat() and v.get("visto", "") >= limite_vista]
+    tenute.sort(key=lambda v: (v["prezzo"], v["dep"]))
+    with open(percorso or FILE_ARCHIVIO, "w", encoding="utf-8") as fh:
+        json.dump({"aggiornato": adesso, "offerte": tenute}, fh, ensure_ascii=False, indent=0)
+    return len(tenute)
+
+
+def formatta_aggiornamento(iso):
+    """'2026-10-29T08:31:00+00:00' -> '29/10/2026 09:31' (ora di Roma). Stringa vuota se non valido."""
+    try:
+        dt = datetime.fromisoformat(iso)
+        if dt.tzinfo is None:
+            dt = dt.replace(tzinfo=timezone.utc)
+        try:
+            from zoneinfo import ZoneInfo
+            dt = dt.astimezone(ZoneInfo("Europe/Rome"))
+        except Exception:
+            pass
+        return dt.strftime("%d/%m/%Y %H:%M")
+    except (TypeError, ValueError):
+        return ""
+
+
+def offerte_da_archivio(archivio):
+    """Rende le voci dell'archivio uguali a quelle di una ricerca live (aggiunge il link)."""
+    risultato = []
+    for v in archivio.get("offerte", []):
+        f = dict(v)
+        f.setdefault("ret_apt", f.get("dep_apt"))
+        f["link"] = genera_link_google_flights(f["dep_apt"], f.get("dest") or f.get("citta"), f["dep"], f["ret"])
+        risultato.append(f)
+    return risultato
+
+
+# ----------------------------------------------------------------------------
+# Quota SerpAPI (piano gratuito: 250 ricerche/mese)
+# ----------------------------------------------------------------------------
+def carica_quota(percorso=None, oggi=None):
+    """Contatore del mese corrente (si azzera da solo al cambio mese)."""
+    mese = (oggi or date.today()).strftime("%Y-%m")
+    try:
+        with open(percorso or FILE_QUOTA, encoding="utf-8") as fh:
+            q = json.load(fh)
+    except (FileNotFoundError, json.JSONDecodeError):
+        q = {}
+    if q.get("mese") != mese:
+        q = {"mese": mese, "usate": 0, "limite": q.get("limite", 250), "avvisi": []}
+    return q
+
+
+def salva_quota(q, percorso=None):
+    with open(percorso or FILE_QUOTA, "w", encoding="utf-8") as fh:
+        json.dump(q, fh, ensure_ascii=False, indent=1, sort_keys=True)
+
+
+def quota_account(api_key, timeout=20):
+    """Chiede a SerpAPI quante ricerche restano (non consuma crediti).
+    Ritorna {'usate', 'limite', 'restanti'} oppure None se non disponibile."""
+    try:
+        r = requests.get(SERPAPI_ACCOUNT_URL, params={"api_key": api_key}, timeout=timeout)
+        r.raise_for_status()
+        d = r.json()
+        usate = d.get("this_month_usage")
+        limite = d.get("searches_per_month") or d.get("plan_searches_per_month")
+        restanti = d.get("total_searches_left", d.get("plan_searches_left"))
+        if usate is None and restanti is None:
+            return None
+        if usate is None and limite is not None:
+            usate = limite - restanti
+        return {"usate": usate, "limite": limite, "restanti": restanti}
+    except Exception:
+        return None
+
+
+def stampa_traceback_pulito(*segreti):
+    return pulisci_segreti(traceback.format_exc(limit=3), *segreti)
 
 
 # ----------------------------------------------------------------------------

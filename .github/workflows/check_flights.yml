@@ -9,11 +9,11 @@ on:
   # Avvio manuale dalla tab "Actions"
   workflow_dispatch:
 
-# Serve per salvare stato_notifiche.json (le offerte già inviate) nel repository
+# Serve per salvare i file di stato (offerte notificate, ultimi risultati, quota) nel repository
 permissions:
   contents: write
 
-# Evita due esecuzioni sovrapposte che si pesterebbero lo stato
+# Evita due esecuzioni sovrapposte che si pesterebbero i file di stato
 concurrency:
   group: check-flights
   cancel-in-progress: false
@@ -44,15 +44,21 @@ jobs:
           DURATA_MAX_ORE: '2.5'
           MESI_AVANTI: '4'
           MAX_CHIAMATE: '4'
+          # tutte | weekend | ponti
+          TIPO_VIAGGIO: 'tutte'
+          # Tetto mensile di ricerche SerpAPI (il piano gratuito ne ha 250)
+          LIMITE_MENSILE: '230'
         run: python bot_scheduler.py
 
-      - name: Salva lo stato delle notifiche
+      - name: Salva i file di stato
         if: always()
         run: |
-          if [ -n "$(git status --porcelain stato_notifiche.json)" ]; then
+          for f in stato_notifiche.json ultimi_risultati.json quota_serpapi.json; do
+            if [ -f "$f" ]; then git add "$f"; fi
+          done
+          if ! git diff --cached --quiet; then
             git config user.name "github-actions[bot]"
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git add stato_notifiche.json
-            git commit -m "Aggiorna stato notifiche voli [skip ci]"
+            git commit -m "Aggiorna risultati e stato del bot [skip ci]"
             git pull --rebase origin "${GITHUB_REF_NAME}" && git push
           fi
