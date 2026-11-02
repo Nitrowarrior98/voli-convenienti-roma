@@ -1,7 +1,13 @@
 import pandas as pd
 import streamlit as st
 
+import importlib
+
 import flight_logic as fl
+
+# Streamlit Cloud, dopo un aggiornamento del repository, può tenere in memoria la vecchia versione
+# dei moduli importati (e ricaricare solo app.py): li ricarichiamo sempre per evitare AttributeError.
+fl = importlib.reload(fl)
 
 st.set_page_config(page_title="Flight Finder Roma", page_icon="✈️", layout="wide")
 
