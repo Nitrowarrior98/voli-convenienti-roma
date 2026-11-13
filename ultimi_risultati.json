@@ -1,5 +1,5 @@
 {
-"aggiornato": "2026-11-12T16:07:12+00:00",
+"aggiornato": "2026-11-13T15:35:21+00:00",
 "offerte": [
 {
 "citta": "Valencia",
@@ -42,6 +42,20 @@
 "scali": 0,
 "tipo": "Weekend (Sab-Dom)",
 "visto": "2026-11-06T15:16:50+00:00"
+},
+{
+"citta": "Palermo",
+"dest": "PMO",
+"paese": "Italia",
+"dep": "2026-11-20",
+"ret": "2026-11-22",
+"prezzo": 54.0,
+"dep_apt": "FCO",
+"ret_apt": "FCO",
+"durata_min": 70,
+"scali": 0,
+"tipo": "Weekend (Ven-Dom)",
+"visto": "2026-11-13T15:35:21+00:00"
 },
 {
 "citta": "Porto",
@@ -464,6 +478,20 @@
 "visto": "2026-11-09T17:43:46+00:00"
 },
 {
+"citta": "Ginevra",
+"dest": "GVA",
+"paese": "Svizzera",
+"dep": "2026-11-20",
+"ret": "2026-11-22",
+"prezzo": 71.0,
+"dep_apt": "FCO",
+"ret_apt": "FCO",
+"durata_min": 95,
+"scali": 0,
+"tipo": "Weekend (Ven-Dom)",
+"visto": "2026-11-13T15:35:21+00:00"
+},
+{
 "citta": "Cagliari",
 "dest": "CAG",
 "paese": "Italia",
@@ -671,7 +699,7 @@
 "durata_min": 75,
 "scali": 0,
 "tipo": "Ponte (Ven-Lun festivo)",
-"visto": "2026-11-11T15:30:23+00:00"
+"visto": "2026-11-13T15:35:21+00:00"
 },
 {
 "citta": "Bucarest",
@@ -999,6 +1027,20 @@
 "citta": "Breslavia",
 "dest": "WRO",
 "paese": "Polonia",
+"dep": "2027-03-26",
+"ret": "2027-03-29",
+"prezzo": 85.0,
+"dep_apt": "CIA",
+"ret_apt": "CIA",
+"durata_min": 125,
+"scali": 0,
+"tipo": "Ponte (Ven-Lun festivo)",
+"visto": "2026-11-13T15:35:21+00:00"
+},
+{
+"citta": "Breslavia",
+"dest": "WRO",
+"paese": "Polonia",
 "dep": "2027-02-20",
 "ret": "2027-02-22",
 "prezzo": 86.0,
@@ -1162,20 +1204,6 @@
 "scali": 0,
 "tipo": "Weekend (Sab-Lun)",
 "visto": "2026-11-09T17:43:46+00:00"
-},
-{
-"citta": "Breslavia",
-"dest": "WRO",
-"paese": "Polonia",
-"dep": "2027-03-26",
-"ret": "2027-03-29",
-"prezzo": 88.0,
-"dep_apt": "CIA",
-"ret_apt": "CIA",
-"durata_min": 125,
-"scali": 0,
-"tipo": "Ponte (Ven-Lun festivo)",
-"visto": "2026-11-11T15:30:23+00:00"
 },
 {
 "citta": "Siviglia",
@@ -1609,7 +1637,7 @@
 "durata_min": 135,
 "scali": 0,
 "tipo": "Ponte (Ven-Lun festivo)",
-"visto": "2026-11-11T15:30:23+00:00"
+"visto": "2026-11-13T15:35:21+00:00"
 },
 {
 "citta": "Nowy Dwór Mazowiecki",
@@ -1724,20 +1752,6 @@
 "visto": "2026-11-08T14:25:22+00:00"
 },
 {
-"citta": "Barcellona",
-"dest": "BCN",
-"paese": "Spagna",
-"dep": "2027-03-26",
-"ret": "2027-03-29",
-"prezzo": 98.0,
-"dep_apt": "FCO",
-"ret_apt": "FCO",
-"durata_min": 110,
-"scali": 0,
-"tipo": "Ponte (Ven-Lun festivo)",
-"visto": "2026-11-11T15:30:23+00:00"
-},
-{
 "citta": "Vienna",
 "dest": "VIE",
 "paese": "Austria",
@@ -1850,6 +1864,34 @@
 "visto": "2026-11-08T14:25:22+00:00"
 },
 {
+"citta": "Cagliari",
+"dest": "CAG",
+"paese": "Italia",
+"dep": "2027-03-26",
+"ret": "2027-03-29",
+"prezzo": 99.0,
+"dep_apt": "CIA",
+"ret_apt": "CIA",
+"durata_min": 65,
+"scali": 0,
+"tipo": "Ponte (Ven-Lun festivo)",
+"visto": "2026-11-13T15:35:21+00:00"
+},
+{
+"citta": "Budapest",
+"dest": "BUD",
+"paese": "Ungheria",
+"dep": "2026-11-20",
+"ret": "2026-11-22",
+"prezzo": 100.0,
+"dep_apt": "FCO",
+"ret_apt": "FCO",
+"durata_min": 110,
+"scali": 0,
+"tipo": "Weekend (Ven-Dom)",
+"visto": "2026-11-13T15:35:21+00:00"
+},
+{
 "citta": "Chișinău",
 "dest": "RMO",
 "paese": "Moldavia",
@@ -1892,20 +1934,6 @@
 "visto": "2026-11-08T14:25:22+00:00"
 },
 {
-"citta": "Cagliari",
-"dest": "CAG",
-"paese": "Italia",
-"dep": "2027-03-26",
-"ret": "2027-03-29",
-"prezzo": 100.0,
-"dep_apt": "CIA",
-"ret_apt": "CIA",
-"durata_min": 65,
-"scali": 0,
-"tipo": "Ponte (Ven-Lun festivo)",
-"visto": "2026-11-11T15:30:23+00:00"
-},
-{
 "citta": "Varsavia",
 "dest": "WAW",
 "paese": "Polonia",
@@ -1917,7 +1945,35 @@
 "durata_min": 145,
 "scali": 0,
 "tipo": "Ponte (Ven-Lun festivo)",
-"visto": "2026-11-11T15:30:23+00:00"
+"visto": "2026-11-13T15:35:21+00:00"
+},
+{
+"citta": "Zurigo",
+"dest": "ZRH",
+"paese": "Svizzera",
+"dep": "2027-03-26",
+"ret": "2027-03-29",
+"prezzo": 100.0,
+"dep_apt": "FCO",
+"ret_apt": "FCO",
+"durata_min": 100,
+"scali": 0,
+"tipo": "Ponte (Ven-Lun festivo)",
+"visto": "2026-11-13T15:35:21+00:00"
+},
+{
+"citta": "Cracovia",
+"dest": "KRK",
+"paese": "Polonia",
+"dep": "2027-03-26",
+"ret": "2027-03-29",
+"prezzo": 100.0,
+"dep_apt": "CIA",
+"ret_apt": "CIA",
+"durata_min": 120,
+"scali": 0,
+"tipo": "Ponte (Ven-Lun festivo)",
+"visto": "2026-11-13T15:35:21+00:00"
 },
 {
 "citta": "Berlino",
@@ -1959,7 +2015,21 @@
 "durata_min": 95,
 "scali": 0,
 "tipo": "Ponte (Ven-Lun festivo)",
-"visto": "2026-11-11T15:30:23+00:00"
+"visto": "2026-11-13T15:35:21+00:00"
+},
+{
+"citta": "Praga",
+"dest": "PRG",
+"paese": "Cechia",
+"dep": "2027-03-26",
+"ret": "2027-03-29",
+"prezzo": 101.0,
+"dep_apt": "CIA",
+"ret_apt": "CIA",
+"durata_min": 110,
+"scali": 0,
+"tipo": "Ponte (Ven-Lun festivo)",
+"visto": "2026-11-13T15:35:21+00:00"
 },
 {
 "citta": "Zurigo",
@@ -1974,6 +2044,20 @@
 "scali": 0,
 "tipo": "Weekend (Sab-Dom)",
 "visto": "2026-11-10T15:42:57+00:00"
+},
+{
+"citta": "Cracovia",
+"dest": "KRK",
+"paese": "Polonia",
+"dep": "2026-11-20",
+"ret": "2026-11-22",
+"prezzo": 102.0,
+"dep_apt": "FCO",
+"ret_apt": "FCO",
+"durata_min": 130,
+"scali": 0,
+"tipo": "Weekend (Ven-Dom)",
+"visto": "2026-11-13T15:35:21+00:00"
 },
 {
 "citta": "Barcellona",
@@ -2074,18 +2158,18 @@
 "visto": "2026-11-09T17:43:46+00:00"
 },
 {
-"citta": "Praga",
-"dest": "PRG",
-"paese": "Cechia",
+"citta": "Barcellona",
+"dest": "BCN",
+"paese": "Spagna",
 "dep": "2027-03-26",
 "ret": "2027-03-29",
 "prezzo": 103.0,
-"dep_apt": "CIA",
-"ret_apt": "CIA",
+"dep_apt": "FCO",
+"ret_apt": "FCO",
 "durata_min": 110,
 "scali": 0,
 "tipo": "Ponte (Ven-Lun festivo)",
-"visto": "2026-11-11T15:30:23+00:00"
+"visto": "2026-11-13T15:35:21+00:00"
 },
 {
 "citta": "Tirana",
@@ -2099,7 +2183,21 @@
 "durata_min": 85,
 "scali": 0,
 "tipo": "Ponte (Ven-Lun festivo)",
-"visto": "2026-11-11T15:30:23+00:00"
+"visto": "2026-11-13T15:35:21+00:00"
+},
+{
+"citta": "Manchester",
+"dest": "MAN",
+"paese": "Regno Unito",
+"dep": "2026-11-20",
+"ret": "2026-11-22",
+"prezzo": 104.0,
+"dep_apt": "FCO",
+"ret_apt": "FCO",
+"durata_min": 175,
+"scali": 0,
+"tipo": "Weekend (Ven-Dom)",
+"visto": "2026-11-13T15:35:21+00:00"
 },
 {
 "citta": "Preston",
@@ -2114,20 +2212,6 @@
 "scali": 0,
 "tipo": "Weekend (Sab-Lun)",
 "visto": "2026-11-09T17:43:46+00:00"
-},
-{
-"citta": "Zurigo",
-"dest": "ZRH",
-"paese": "Svizzera",
-"dep": "2027-03-26",
-"ret": "2027-03-29",
-"prezzo": 104.0,
-"dep_apt": "FCO",
-"ret_apt": "FCO",
-"durata_min": 100,
-"scali": 0,
-"tipo": "Ponte (Ven-Lun festivo)",
-"visto": "2026-11-11T15:30:23+00:00"
 },
 {
 "citta": "Bratislava",
@@ -2228,6 +2312,20 @@
 "visto": "2026-11-06T15:16:50+00:00"
 },
 {
+"citta": "Sofia",
+"dest": "SOF",
+"paese": "Bulgaria",
+"dep": "2027-03-26",
+"ret": "2027-03-29",
+"prezzo": 108.0,
+"dep_apt": "CIA",
+"ret_apt": "CIA",
+"durata_min": 105,
+"scali": 0,
+"tipo": "Ponte (Ven-Lun festivo)",
+"visto": "2026-11-13T15:35:21+00:00"
+},
+{
 "citta": "Tirana",
 "dest": "TIA",
 "paese": "Albania",
@@ -2282,20 +2380,6 @@
 "scali": 0,
 "tipo": "Weekend (Sab-Lun)",
 "visto": "2026-11-09T17:43:46+00:00"
-},
-{
-"citta": "Cracovia",
-"dest": "KRK",
-"paese": "Polonia",
-"dep": "2027-03-26",
-"ret": "2027-03-29",
-"prezzo": 109.0,
-"dep_apt": "CIA",
-"ret_apt": "CIA",
-"durata_min": 120,
-"scali": 0,
-"tipo": "Ponte (Ven-Lun festivo)",
-"visto": "2026-11-11T15:30:23+00:00"
 },
 {
 "citta": "Praga",
@@ -2366,6 +2450,20 @@
 "scali": 0,
 "tipo": "Weekend (Sab-Lun)",
 "visto": "2026-11-09T17:43:46+00:00"
+},
+{
+"citta": "Bucarest",
+"dest": "OTP",
+"paese": "Romania",
+"dep": "2027-03-26",
+"ret": "2027-03-29",
+"prezzo": 110.0,
+"dep_apt": "CIA",
+"ret_apt": "CIA",
+"durata_min": 125,
+"scali": 0,
+"tipo": "Ponte (Ven-Lun festivo)",
+"visto": "2026-11-13T15:35:21+00:00"
 },
 {
 "citta": "Monaco di Baviera",
@@ -2480,20 +2578,6 @@
 "visto": "2026-11-09T17:43:46+00:00"
 },
 {
-"citta": "Bucarest",
-"dest": "OTP",
-"paese": "Romania",
-"dep": "2027-03-26",
-"ret": "2027-03-29",
-"prezzo": 112.0,
-"dep_apt": "CIA",
-"ret_apt": "CIA",
-"durata_min": 125,
-"scali": 0,
-"tipo": "Ponte (Ven-Lun festivo)",
-"visto": "2026-11-11T15:30:23+00:00"
-},
-{
 "citta": "Londra",
 "dest": "STN",
 "paese": "Regno Unito",
@@ -2520,20 +2604,6 @@
 "scali": 0,
 "tipo": "Weekend (Sab-Lun)",
 "visto": "2026-11-09T17:43:46+00:00"
-},
-{
-"citta": "Sofia",
-"dest": "SOF",
-"paese": "Bulgaria",
-"dep": "2027-03-26",
-"ret": "2027-03-29",
-"prezzo": 113.0,
-"dep_apt": "CIA",
-"ret_apt": "CIA",
-"durata_min": 105,
-"scali": 0,
-"tipo": "Ponte (Ven-Lun festivo)",
-"visto": "2026-11-11T15:30:23+00:00"
 },
 {
 "citta": "Bordeaux",
@@ -2673,7 +2743,7 @@
 "durata_min": 130,
 "scali": 0,
 "tipo": "Ponte (Ven-Lun festivo)",
-"visto": "2026-11-11T15:30:23+00:00"
+"visto": "2026-11-13T15:35:21+00:00"
 },
 {
 "citta": "Londra",
@@ -2688,6 +2758,20 @@
 "scali": 0,
 "tipo": "Weekend (Sab-Dom)",
 "visto": "2026-11-10T15:42:57+00:00"
+},
+{
+"citta": "Zurigo",
+"dest": "ZRH",
+"paese": "Svizzera",
+"dep": "2026-11-20",
+"ret": "2026-11-22",
+"prezzo": 118.0,
+"dep_apt": "FCO",
+"ret_apt": "FCO",
+"durata_min": 100,
+"scali": 0,
+"tipo": "Weekend (Ven-Dom)",
+"visto": "2026-11-13T15:35:21+00:00"
 },
 {
 "citta": "Parigi",
@@ -2914,6 +2998,20 @@
 "visto": "2026-11-09T17:43:46+00:00"
 },
 {
+"citta": "Chișinău",
+"dest": "RMO",
+"paese": "Moldavia",
+"dep": "2026-11-20",
+"ret": "2026-11-22",
+"prezzo": 122.0,
+"dep_apt": "FCO",
+"ret_apt": "FCO",
+"durata_min": 150,
+"scali": 0,
+"tipo": "Weekend (Ven-Dom)",
+"visto": "2026-11-13T15:35:21+00:00"
+},
+{
 "citta": "Valencia",
 "dest": "VLC",
 "paese": "Spagna",
@@ -2967,7 +3065,7 @@
 "durata_min": 105,
 "scali": 0,
 "tipo": "Ponte (Ven-Lun festivo)",
-"visto": "2026-11-11T15:30:23+00:00"
+"visto": "2026-11-13T15:35:21+00:00"
 },
 {
 "citta": "Madrid",
@@ -2981,7 +3079,7 @@
 "durata_min": 160,
 "scali": 0,
 "tipo": "Ponte (Ven-Lun festivo)",
-"visto": "2026-11-11T15:30:23+00:00"
+"visto": "2026-11-13T15:35:21+00:00"
 },
 {
 "citta": "Cracovia",
@@ -2996,6 +3094,20 @@
 "scali": 0,
 "tipo": "Weekend (Sab-Dom)",
 "visto": "2026-11-10T15:42:57+00:00"
+},
+{
+"citta": "Nizza",
+"dest": "NCE",
+"paese": "Francia",
+"dep": "2026-11-20",
+"ret": "2026-11-22",
+"prezzo": 123.0,
+"dep_apt": "FCO",
+"ret_apt": "FCO",
+"durata_min": 75,
+"scali": 0,
+"tipo": "Weekend (Ven-Dom)",
+"visto": "2026-11-13T15:35:21+00:00"
 },
 {
 "citta": "Breslavia",
@@ -3121,7 +3233,7 @@
 "durata_min": 70,
 "scali": 0,
 "tipo": "Ponte (Ven-Lun festivo)",
-"visto": "2026-11-11T15:30:23+00:00"
+"visto": "2026-11-13T15:35:21+00:00"
 },
 {
 "citta": "Milano",
@@ -3150,6 +3262,20 @@
 "scali": 0,
 "tipo": "Ponte (Sab-Mar | ferie Lun)",
 "visto": "2026-11-04T08:30:21+00:00"
+},
+{
+"citta": "Siviglia",
+"dest": "SVQ",
+"paese": "Spagna",
+"dep": "2026-11-20",
+"ret": "2026-11-22",
+"prezzo": 126.0,
+"dep_apt": "FCO",
+"ret_apt": "FCO",
+"durata_min": 170,
+"scali": 0,
+"tipo": "Weekend (Ven-Dom)",
+"visto": "2026-11-13T15:35:21+00:00"
 },
 {
 "citta": "Madrid",
@@ -3194,18 +3320,18 @@
 "visto": "2026-11-09T17:43:46+00:00"
 },
 {
-"citta": "Praga",
-"dest": "PRG",
-"paese": "Cechia",
-"dep": "2027-03-26",
-"ret": "2027-03-29",
-"prezzo": 126.0,
+"citta": "Madrid",
+"dest": "MAD",
+"paese": "Spagna",
+"dep": "2026-11-20",
+"ret": "2026-11-22",
+"prezzo": 127.0,
 "dep_apt": "FCO",
 "ret_apt": "FCO",
-"durata_min": 115,
+"durata_min": 155,
 "scali": 0,
-"tipo": "Ponte (Ven-Lun festivo)",
-"visto": "2026-11-11T15:30:23+00:00"
+"tipo": "Weekend (Ven-Dom)",
+"visto": "2026-11-13T15:35:21+00:00"
 },
 {
 "citta": "Breslavia",
@@ -3292,6 +3418,20 @@
 "visto": "2026-11-06T15:16:50+00:00"
 },
 {
+"citta": "Valencia",
+"dest": "VLC",
+"paese": "Spagna",
+"dep": "2026-11-20",
+"ret": "2026-11-22",
+"prezzo": 129.0,
+"dep_apt": "FCO",
+"ret_apt": "FCO",
+"durata_min": 130,
+"scali": 0,
+"tipo": "Weekend (Ven-Dom)",
+"visto": "2026-11-13T15:35:21+00:00"
+},
+{
 "citta": "Siviglia",
 "dest": "SVQ",
 "paese": "Spagna",
@@ -3346,6 +3486,20 @@
 "scali": 0,
 "tipo": "Weekend (Sab-Dom)",
 "visto": "2026-11-12T16:07:12+00:00"
+},
+{
+"citta": "Milano",
+"dest": "LIN",
+"paese": "Italia",
+"dep": "2026-11-20",
+"ret": "2026-11-22",
+"prezzo": 130.0,
+"dep_apt": "FCO",
+"ret_apt": "FCO",
+"durata_min": 70,
+"scali": 0,
+"tipo": "Weekend (Ven-Dom)",
+"visto": "2026-11-13T15:35:21+00:00"
 },
 {
 "citta": "Budapest",
@@ -3404,6 +3558,20 @@
 "visto": "2026-11-12T16:07:12+00:00"
 },
 {
+"citta": "Praga",
+"dest": "PRG",
+"paese": "Cechia",
+"dep": "2027-03-26",
+"ret": "2027-03-29",
+"prezzo": 131.0,
+"dep_apt": "FCO",
+"ret_apt": "FCO",
+"durata_min": 115,
+"scali": 1,
+"tipo": "Ponte (Ven-Lun festivo)",
+"visto": "2026-11-13T15:35:21+00:00"
+},
+{
 "citta": "Strasburgo",
 "dest": "SXB",
 "paese": "Francia",
@@ -3446,6 +3614,20 @@
 "visto": "2026-11-05T08:32:32+00:00"
 },
 {
+"citta": "Atene",
+"dest": "ATH",
+"paese": "Grecia",
+"dep": "2027-03-26",
+"ret": "2027-03-29",
+"prezzo": 133.0,
+"dep_apt": "FCO",
+"ret_apt": "FCO",
+"durata_min": 120,
+"scali": 0,
+"tipo": "Ponte (Ven-Lun festivo)",
+"visto": "2026-11-13T15:35:21+00:00"
+},
+{
 "citta": "Aix-en-Provence",
 "dest": "MRS",
 "paese": "Francia",
@@ -3486,20 +3668,6 @@
 "scali": 0,
 "tipo": "Ponte (Ven festivo)",
 "visto": "2026-11-05T08:32:32+00:00"
-},
-{
-"citta": "Atene",
-"dest": "ATH",
-"paese": "Grecia",
-"dep": "2027-03-26",
-"ret": "2027-03-29",
-"prezzo": 135.0,
-"dep_apt": "FCO",
-"ret_apt": "FCO",
-"durata_min": 120,
-"scali": 0,
-"tipo": "Ponte (Ven-Lun festivo)",
-"visto": "2026-11-11T15:30:23+00:00"
 },
 {
 "citta": "Madrid",
@@ -3570,6 +3738,20 @@
 "scali": 0,
 "tipo": "Weekend (Ven-Dom)",
 "visto": "2026-11-11T15:30:23+00:00"
+},
+{
+"citta": "Bordeaux",
+"dest": "BOD",
+"paese": "Francia",
+"dep": "2026-11-20",
+"ret": "2026-11-22",
+"prezzo": 137.0,
+"dep_apt": "FCO",
+"ret_apt": "FCO",
+"durata_min": 125,
+"scali": 0,
+"tipo": "Weekend (Ven-Dom)",
+"visto": "2026-11-13T15:35:21+00:00"
 },
 {
 "citta": "Praga",
@@ -3891,7 +4073,7 @@
 "durata_min": 70,
 "scali": 0,
 "tipo": "Ponte (Ven-Lun festivo)",
-"visto": "2026-11-11T15:30:23+00:00"
+"visto": "2026-11-13T15:35:21+00:00"
 },
 {
 "citta": "Barcellona",
@@ -3948,20 +4130,6 @@
 "scali": 0,
 "tipo": "Weekend lungo (Ven-Lun)",
 "visto": "2026-11-04T08:30:21+00:00"
-},
-{
-"citta": "Londra",
-"dest": "STN",
-"paese": "Regno Unito",
-"dep": "2027-03-26",
-"ret": "2027-03-29",
-"prezzo": 145.0,
-"dep_apt": "CIA",
-"ret_apt": "CIA",
-"durata_min": 160,
-"scali": 0,
-"tipo": "Ponte (Ven-Lun festivo)",
-"visto": "2026-11-11T15:30:23+00:00"
 },
 {
 "citta": "Nizza",
@@ -4076,6 +4244,34 @@
 "visto": "2026-11-04T08:30:21+00:00"
 },
 {
+"citta": "Londra",
+"dest": "STN",
+"paese": "Regno Unito",
+"dep": "2027-03-26",
+"ret": "2027-03-29",
+"prezzo": 147.0,
+"dep_apt": "CIA",
+"ret_apt": "CIA",
+"durata_min": 160,
+"scali": 0,
+"tipo": "Ponte (Ven-Lun festivo)",
+"visto": "2026-11-13T15:35:21+00:00"
+},
+{
+"citta": "Londra",
+"dest": "LGW",
+"paese": "Regno Unito",
+"dep": "2026-11-20",
+"ret": "2026-11-22",
+"prezzo": 148.0,
+"dep_apt": "FCO",
+"ret_apt": "FCO",
+"durata_min": 160,
+"scali": 0,
+"tipo": "Weekend (Ven-Dom)",
+"visto": "2026-11-13T15:35:21+00:00"
+},
+{
 "citta": "Bucarest",
 "dest": "OTP",
 "paese": "Romania",
@@ -4102,6 +4298,34 @@
 "scali": 1,
 "tipo": "Ponte (Ven festivo)",
 "visto": "2026-11-12T16:07:12+00:00"
+},
+{
+"citta": "Parigi",
+"dest": "ORY",
+"paese": "Francia",
+"dep": "2026-11-20",
+"ret": "2026-11-22",
+"prezzo": 149.0,
+"dep_apt": "FCO",
+"ret_apt": "FCO",
+"durata_min": 135,
+"scali": 0,
+"tipo": "Weekend (Ven-Dom)",
+"visto": "2026-11-13T15:35:21+00:00"
+},
+{
+"citta": "Firenze",
+"dest": "FLR",
+"paese": "Italia",
+"dep": "2026-11-20",
+"ret": "2026-11-22",
+"prezzo": 149.0,
+"dep_apt": "FCO",
+"ret_apt": "FCO",
+"durata_min": 55,
+"scali": 0,
+"tipo": "Weekend (Ven-Dom)",
+"visto": "2026-11-13T15:35:21+00:00"
 },
 {
 "citta": "Firenze",
@@ -4230,6 +4454,34 @@
 "visto": "2026-11-12T16:07:12+00:00"
 },
 {
+"citta": "Atene",
+"dest": "ATH",
+"paese": "Grecia",
+"dep": "2026-11-20",
+"ret": "2026-11-22",
+"prezzo": 150.0,
+"dep_apt": "FCO",
+"ret_apt": "FCO",
+"durata_min": 120,
+"scali": 0,
+"tipo": "Weekend (Ven-Dom)",
+"visto": "2026-11-13T15:35:21+00:00"
+},
+{
+"citta": "Colonia",
+"dest": "CGN",
+"paese": "Germania",
+"dep": "2026-11-20",
+"ret": "2026-11-22",
+"prezzo": 150.0,
+"dep_apt": "FCO",
+"ret_apt": "FCO",
+"durata_min": 120,
+"scali": 0,
+"tipo": "Weekend (Ven-Dom)",
+"visto": "2026-11-13T15:35:21+00:00"
+},
+{
 "citta": "Varsavia",
 "dest": "WAW",
 "paese": "Polonia",
@@ -4311,7 +4563,7 @@
 "durata_min": 105,
 "scali": 0,
 "tipo": "Ponte (Ven-Lun festivo)",
-"visto": "2026-11-11T15:30:23+00:00"
+"visto": "2026-11-13T15:35:21+00:00"
 },
 {
 "citta": "Venezia",
@@ -4384,6 +4636,20 @@
 "visto": "2026-11-11T15:30:23+00:00"
 },
 {
+"citta": "Amburgo",
+"dest": "HAM",
+"paese": "Germania",
+"dep": "2026-11-20",
+"ret": "2026-11-22",
+"prezzo": 155.0,
+"dep_apt": "FCO",
+"ret_apt": "FCO",
+"durata_min": 135,
+"scali": 0,
+"tipo": "Weekend (Ven-Dom)",
+"visto": "2026-11-13T15:35:21+00:00"
+},
+{
 "citta": "Bratislava",
 "dest": "BTS",
 "paese": "Slovacchia",
@@ -4410,6 +4676,20 @@
 "scali": 0,
 "tipo": "Weekend (Sab-Dom)",
 "visto": "2026-11-12T16:07:12+00:00"
+},
+{
+"citta": "Varsavia",
+"dest": "WAW",
+"paese": "Polonia",
+"dep": "2026-11-20",
+"ret": "2026-11-22",
+"prezzo": 156.0,
+"dep_apt": "FCO",
+"ret_apt": "FCO",
+"durata_min": 145,
+"scali": 0,
+"tipo": "Weekend (Ven-Dom)",
+"visto": "2026-11-13T15:35:21+00:00"
 },
 {
 "citta": "Praga",
@@ -4465,7 +4745,21 @@
 "durata_min": 170,
 "scali": 0,
 "tipo": "Ponte (Ven-Lun festivo)",
-"visto": "2026-11-11T15:30:23+00:00"
+"visto": "2026-11-13T15:35:21+00:00"
+},
+{
+"citta": "Budapest",
+"dest": "BUD",
+"paese": "Ungheria",
+"dep": "2027-03-26",
+"ret": "2027-03-29",
+"prezzo": 156.0,
+"dep_apt": "CIA",
+"ret_apt": "CIA",
+"durata_min": 100,
+"scali": 0,
+"tipo": "Ponte (Ven-Lun festivo)",
+"visto": "2026-11-13T15:35:21+00:00"
 },
 {
 "citta": "Dublino",
@@ -4480,20 +4774,6 @@
 "scali": 0,
 "tipo": "Weekend (Sab-Lun)",
 "visto": "2026-11-05T08:32:32+00:00"
-},
-{
-"citta": "Valencia",
-"dest": "VLC",
-"paese": "Spagna",
-"dep": "2027-03-26",
-"ret": "2027-03-29",
-"prezzo": 157.0,
-"dep_apt": "FCO",
-"ret_apt": "FCO",
-"durata_min": 125,
-"scali": 0,
-"tipo": "Ponte (Ven-Lun festivo)",
-"visto": "2026-11-11T15:30:23+00:00"
 },
 {
 "citta": "Valencia",
@@ -4536,6 +4816,20 @@
 "scali": 0,
 "tipo": "Ponte (Ven festivo)",
 "visto": "2026-11-12T16:07:12+00:00"
+},
+{
+"citta": "Berlino",
+"dest": "BER",
+"paese": "Germania",
+"dep": "2026-11-20",
+"ret": "2026-11-22",
+"prezzo": 159.0,
+"dep_apt": "FCO",
+"ret_apt": "FCO",
+"durata_min": 135,
+"scali": 0,
+"tipo": "Weekend (Ven-Dom)",
+"visto": "2026-11-13T15:35:21+00:00"
 },
 {
 "citta": "Londra",
@@ -4594,6 +4888,34 @@
 "visto": "2026-11-11T15:30:23+00:00"
 },
 {
+"citta": "Praga",
+"dest": "PRG",
+"paese": "Cechia",
+"dep": "2026-11-20",
+"ret": "2026-11-22",
+"prezzo": 160.0,
+"dep_apt": "FCO",
+"ret_apt": "FCO",
+"durata_min": 115,
+"scali": 0,
+"tipo": "Weekend (Ven-Dom)",
+"visto": "2026-11-13T15:35:21+00:00"
+},
+{
+"citta": "Porto",
+"dest": "OPO",
+"paese": "Portogallo",
+"dep": "2026-11-20",
+"ret": "2026-11-22",
+"prezzo": 160.0,
+"dep_apt": "FCO",
+"ret_apt": "FCO",
+"durata_min": 355,
+"scali": 1,
+"tipo": "Weekend (Ven-Dom)",
+"visto": "2026-11-13T15:35:21+00:00"
+},
+{
 "citta": "Aix-en-Provence",
 "dest": "MRS",
 "paese": "Francia",
@@ -4606,20 +4928,6 @@
 "scali": 0,
 "tipo": "Weekend (Sab-Dom)",
 "visto": "2026-11-06T15:16:50+00:00"
-},
-{
-"citta": "Budapest",
-"dest": "BUD",
-"paese": "Ungheria",
-"dep": "2027-03-26",
-"ret": "2027-03-29",
-"prezzo": 160.0,
-"dep_apt": "CIA",
-"ret_apt": "CIA",
-"durata_min": 100,
-"scali": 0,
-"tipo": "Ponte (Ven-Lun festivo)",
-"visto": "2026-11-11T15:30:23+00:00"
 },
 {
 "citta": "Lisbona",
@@ -4678,20 +4986,6 @@
 "visto": "2026-11-09T17:43:46+00:00"
 },
 {
-"citta": "Parigi",
-"dest": "ORY",
-"paese": "Francia",
-"dep": "2027-03-26",
-"ret": "2027-03-29",
-"prezzo": 161.0,
-"dep_apt": "FCO",
-"ret_apt": "FCO",
-"durata_min": 130,
-"scali": 0,
-"tipo": "Ponte (Ven-Lun festivo)",
-"visto": "2026-11-11T15:30:23+00:00"
-},
-{
 "citta": "Dublino",
 "dest": "DUB",
 "paese": "Irlanda",
@@ -4732,6 +5026,20 @@
 "scali": 0,
 "tipo": "Ponte (Sab-Mar | ferie Lun)",
 "visto": "2026-11-04T08:30:21+00:00"
+},
+{
+"citta": "Parigi",
+"dest": "ORY",
+"paese": "Francia",
+"dep": "2027-03-26",
+"ret": "2027-03-29",
+"prezzo": 165.0,
+"dep_apt": "FCO",
+"ret_apt": "FCO",
+"durata_min": 130,
+"scali": 0,
+"tipo": "Ponte (Ven-Lun festivo)",
+"visto": "2026-11-13T15:35:21+00:00"
 },
 {
 "citta": "Varsavia",
@@ -4801,7 +5109,7 @@
 "durata_min": 530,
 "scali": 1,
 "tipo": "Ponte (Ven-Lun festivo)",
-"visto": "2026-11-11T15:30:23+00:00"
+"visto": "2026-11-13T15:35:21+00:00"
 },
 {
 "citta": "Berlino",
@@ -4830,6 +5138,20 @@
 "scali": 0,
 "tipo": "Weekend (Sab-Dom)",
 "visto": "2026-11-12T16:07:12+00:00"
+},
+{
+"citta": "Francoforte sul Meno",
+"dest": "FRA",
+"paese": "Germania",
+"dep": "2026-11-20",
+"ret": "2026-11-22",
+"prezzo": 168.0,
+"dep_apt": "FCO",
+"ret_apt": "FCO",
+"durata_min": 120,
+"scali": 0,
+"tipo": "Weekend (Ven-Dom)",
+"visto": "2026-11-13T15:35:21+00:00"
 },
 {
 "citta": "Nizza",
@@ -4886,6 +5208,20 @@
 "scali": 0,
 "tipo": "Ponte (Ven festivo)",
 "visto": "2026-11-05T08:32:32+00:00"
+},
+{
+"citta": "Valencia",
+"dest": "VLC",
+"paese": "Spagna",
+"dep": "2027-03-26",
+"ret": "2027-03-29",
+"prezzo": 169.0,
+"dep_apt": "FCO",
+"ret_apt": "FCO",
+"durata_min": 125,
+"scali": 0,
+"tipo": "Ponte (Ven-Lun festivo)",
+"visto": "2026-11-13T15:35:21+00:00"
 },
 {
 "citta": "Porto",
@@ -4956,6 +5292,20 @@
 "scali": 0,
 "tipo": "Weekend (Sab-Dom)",
 "visto": "2026-11-12T16:07:12+00:00"
+},
+{
+"citta": "Venezia",
+"dest": "VCE",
+"paese": "Italia",
+"dep": "2026-11-20",
+"ret": "2026-11-22",
+"prezzo": 171.0,
+"dep_apt": "FCO",
+"ret_apt": "FCO",
+"durata_min": 70,
+"scali": 0,
+"tipo": "Weekend (Ven-Dom)",
+"visto": "2026-11-13T15:35:21+00:00"
 },
 {
 "citta": "Siviglia",
@@ -5165,7 +5515,7 @@
 "durata_min": 290,
 "scali": 1,
 "tipo": "Ponte (Ven-Lun festivo)",
-"visto": "2026-11-11T15:30:23+00:00"
+"visto": "2026-11-13T15:35:21+00:00"
 },
 {
 "citta": "Amburgo",
@@ -5222,6 +5572,20 @@
 "scali": 0,
 "tipo": "Weekend (Sab-Dom)",
 "visto": "2026-11-12T16:07:12+00:00"
+},
+{
+"citta": "Monaco di Baviera",
+"dest": "MUC",
+"paese": "Germania",
+"dep": "2026-11-20",
+"ret": "2026-11-22",
+"prezzo": 180.0,
+"dep_apt": "FCO",
+"ret_apt": "FCO",
+"durata_min": 105,
+"scali": 0,
+"tipo": "Weekend (Ven-Dom)",
+"visto": "2026-11-13T15:35:21+00:00"
 },
 {
 "citta": "Zurigo",
@@ -5375,7 +5739,7 @@
 "durata_min": 170,
 "scali": 0,
 "tipo": "Ponte (Ven-Lun festivo)",
-"visto": "2026-11-11T15:30:23+00:00"
+"visto": "2026-11-13T15:35:21+00:00"
 },
 {
 "citta": "Francoforte sul Meno",
@@ -5672,6 +6036,34 @@
 "visto": "2026-11-11T15:30:23+00:00"
 },
 {
+"citta": "Lisbona",
+"dest": "LIS",
+"paese": "Portogallo",
+"dep": "2026-11-20",
+"ret": "2026-11-22",
+"prezzo": 190.0,
+"dep_apt": "FCO",
+"ret_apt": "FCO",
+"durata_min": 200,
+"scali": 0,
+"tipo": "Weekend (Ven-Dom)",
+"visto": "2026-11-13T15:35:21+00:00"
+},
+{
+"citta": "Dublino",
+"dest": "DUB",
+"paese": "Irlanda",
+"dep": "2026-11-20",
+"ret": "2026-11-22",
+"prezzo": 190.0,
+"dep_apt": "FCO",
+"ret_apt": "FCO",
+"durata_min": 755,
+"scali": 1,
+"tipo": "Weekend (Ven-Dom)",
+"visto": "2026-11-13T15:35:21+00:00"
+},
+{
 "citta": "Berlino",
 "dest": "BER",
 "paese": "Germania",
@@ -5683,7 +6075,21 @@
 "durata_min": 130,
 "scali": 0,
 "tipo": "Ponte (Ven-Lun festivo)",
-"visto": "2026-11-11T15:30:23+00:00"
+"visto": "2026-11-13T15:35:21+00:00"
+},
+{
+"citta": "Amsterdam",
+"dest": "AMS",
+"paese": "Paesi Bassi",
+"dep": "2026-11-20",
+"ret": "2026-11-22",
+"prezzo": 191.0,
+"dep_apt": "FCO",
+"ret_apt": "FCO",
+"durata_min": 150,
+"scali": 0,
+"tipo": "Weekend (Ven-Dom)",
+"visto": "2026-11-13T15:35:21+00:00"
 },
 {
 "citta": "Londra",
@@ -5705,13 +6111,13 @@
 "paese": "Polonia",
 "dep": "2027-03-26",
 "ret": "2027-03-29",
-"prezzo": 192.0,
+"prezzo": 191.0,
 "dep_apt": "CIA",
 "ret_apt": "CIA",
 "durata_min": 130,
 "scali": 0,
 "tipo": "Ponte (Ven-Lun festivo)",
-"visto": "2026-11-11T15:30:23+00:00"
+"visto": "2026-11-13T15:35:21+00:00"
 },
 {
 "citta": "Spalato",
@@ -5739,7 +6145,7 @@
 "durata_min": 155,
 "scali": 0,
 "tipo": "Ponte (Ven-Lun festivo)",
-"visto": "2026-11-11T15:30:23+00:00"
+"visto": "2026-11-13T15:35:21+00:00"
 },
 {
 "citta": "Sofia",
@@ -5796,20 +6202,6 @@
 "scali": 1,
 "tipo": "Weekend (Sab-Dom)",
 "visto": "2026-11-06T15:16:50+00:00"
-},
-{
-"citta": "Lisbona",
-"dest": "LIS",
-"paese": "Portogallo",
-"dep": "2027-03-26",
-"ret": "2027-03-29",
-"prezzo": 195.0,
-"dep_apt": "FCO",
-"ret_apt": "FCO",
-"durata_min": 190,
-"scali": 0,
-"tipo": "Ponte (Ven-Lun festivo)",
-"visto": "2026-11-11T15:30:23+00:00"
 },
 {
 "citta": "Spalato",
@@ -5949,7 +6341,7 @@
 "durata_min": 860,
 "scali": 1,
 "tipo": "Ponte (Ven-Lun festivo)",
-"visto": "2026-11-11T15:30:23+00:00"
+"visto": "2026-11-13T15:35:21+00:00"
 },
 {
 "citta": "Aix-en-Provence",
@@ -6048,6 +6440,20 @@
 "scali": 0,
 "tipo": "Weekend (Sab-Dom)",
 "visto": "2026-11-12T16:07:12+00:00"
+},
+{
+"citta": "Barcellona",
+"dest": "BCN",
+"paese": "Spagna",
+"dep": "2026-11-20",
+"ret": "2026-11-22",
+"prezzo": 205.0,
+"dep_apt": "FCO",
+"ret_apt": "FCO",
+"durata_min": 105,
+"scali": 0,
+"tipo": "Weekend (Ven-Dom)",
+"visto": "2026-11-13T15:35:21+00:00"
 },
 {
 "citta": "Regione di Bruxelles-Capitale",
@@ -6162,6 +6568,20 @@
 "visto": "2026-11-04T08:30:21+00:00"
 },
 {
+"citta": "Marsiglia",
+"dest": "MRS",
+"paese": "Francia",
+"dep": "2026-11-20",
+"ret": "2026-11-22",
+"prezzo": 210.0,
+"dep_apt": "FCO",
+"ret_apt": "FCO",
+"durata_min": 800,
+"scali": 1,
+"tipo": "Weekend (Ven-Dom)",
+"visto": "2026-11-13T15:35:21+00:00"
+},
+{
 "citta": "Lisbona",
 "dest": "LIS",
 "paese": "Portogallo",
@@ -6187,7 +6607,7 @@
 "durata_min": 985,
 "scali": 1,
 "tipo": "Ponte (Ven-Lun festivo)",
-"visto": "2026-11-11T15:30:23+00:00"
+"visto": "2026-11-13T15:35:21+00:00"
 },
 {
 "citta": "Monaco di Baviera",
@@ -6302,18 +6722,18 @@
 "visto": "2026-11-04T08:30:21+00:00"
 },
 {
-"citta": "Dublino",
-"dest": "DUB",
-"paese": "Irlanda",
-"dep": "2027-03-26",
-"ret": "2027-03-29",
-"prezzo": 212.0,
+"citta": "Vienna",
+"dest": "VIE",
+"paese": "Austria",
+"dep": "2026-11-20",
+"ret": "2026-11-22",
+"prezzo": 213.0,
 "dep_apt": "FCO",
 "ret_apt": "FCO",
-"durata_min": 195,
+"durata_min": 105,
 "scali": 0,
-"tipo": "Ponte (Ven-Lun festivo)",
-"visto": "2026-11-11T15:30:23+00:00"
+"tipo": "Weekend (Ven-Dom)",
+"visto": "2026-11-13T15:35:21+00:00"
 },
 {
 "citta": "Cracovia",
@@ -6442,6 +6862,20 @@
 "visto": "2026-11-05T08:32:32+00:00"
 },
 {
+"citta": "Dublino",
+"dest": "DUB",
+"paese": "Irlanda",
+"dep": "2027-03-26",
+"ret": "2027-03-29",
+"prezzo": 217.0,
+"dep_apt": "FCO",
+"ret_apt": "FCO",
+"durata_min": 195,
+"scali": 0,
+"tipo": "Ponte (Ven-Lun festivo)",
+"visto": "2026-11-13T15:35:21+00:00"
+},
+{
 "citta": "Londra",
 "dest": "LGW",
 "paese": "Regno Unito",
@@ -6481,7 +6915,7 @@
 "durata_min": 1135,
 "scali": 2,
 "tipo": "Ponte (Ven-Lun festivo)",
-"visto": "2026-11-11T15:30:23+00:00"
+"visto": "2026-11-13T15:35:21+00:00"
 },
 {
 "citta": "Bordeaux",
@@ -6594,6 +7028,20 @@
 "scali": 0,
 "tipo": "Weekend (Ven-Dom)",
 "visto": "2026-11-11T15:30:23+00:00"
+},
+{
+"citta": "Lisbona",
+"dest": "LIS",
+"paese": "Portogallo",
+"dep": "2027-03-26",
+"ret": "2027-03-29",
+"prezzo": 226.0,
+"dep_apt": "FCO",
+"ret_apt": "FCO",
+"durata_min": 955,
+"scali": 1,
+"tipo": "Ponte (Ven-Lun festivo)",
+"visto": "2026-11-13T15:35:21+00:00"
 },
 {
 "citta": "Praga",
